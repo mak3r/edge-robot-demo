@@ -1,0 +1,4 @@
+# /etc/udev/rules.d/11-ftdi.rules
+
+# FT232H
+SUBSYSTEM=="usb", ATTR{idVendor}=="0403", ATTR{idProduct}=="6014", GROUP="plugdev", MODE="0664"
