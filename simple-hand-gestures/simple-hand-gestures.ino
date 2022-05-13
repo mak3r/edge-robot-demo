@@ -19,10 +19,7 @@ enum finger {
 };
 
 //To hold the current position of each finger
-byte cur_pos[] = {0,0,0,0,0};
-
-//chill macro
-#define chill(pos,n) (pos/16*n)
+int cur_pos[] = {0x400,0x400,0x400,0x400,0x400};
 
 // Depending on your servo make, the pulse width min and max may vary, you 
 // want these to be as small/large as possible without hitting the hard stop
@@ -85,9 +82,12 @@ void setup() {
   Serial.println(agent.getAddress());
 
   pwm.begin(); //This calls Wire.begin()
+  pwm.sleep();
   pwm.setPWMFreq(SERVO_FREQ);  // This is the maximum PWM frequency
 
   interval = agent.getRegister(gesture_hold) * 1000;
+  // Arbitrarilly decided that the interval should not be less than 2 seconds 
+  // or more than 20 seconds
   interval = constrain(interval, 2000, 20000);
 }
 
@@ -100,9 +100,9 @@ void loop() {
     previousMillis = currentMillis;
     pwm.wakeup();
     (flip) ? gesture() : relax();
-    pwm.sleep();
     flip = !flip;
   }
+  pwm.sleep();
   
 
 }
@@ -114,34 +114,33 @@ void gesture() {
     next_gesture(g1_middle+i, (byte)middle );
     next_gesture(g1_pointer+i, (byte)pointer );
     next_gesture(g1_thumb+i, (byte)thumb );
-    delay(100);
+    delay(50);
   }
 }
 
-void relax() {
-  
-  for (int i=16; i>=1; i--) {  
-    pwm.writeMicroseconds((byte)pinky, chill(cur_pos[pinky],i) );
-    pwm.writeMicroseconds((byte)ring, chill(cur_pos[ring],i) );
-    pwm.writeMicroseconds((byte)middle, chill(cur_pos[middle],i) );
-    pwm.writeMicroseconds((byte)pointer, chill(cur_pos[pointer],i) );
-    pwm.writeMicroseconds((byte)thumb, chill(cur_pos[thumb],i) );
+#define step_range(high, low) (abs(high-low))
+#define new_pos(high, low, step) ( (step==0) ? high : (step_range(high,low)/step)+low )
 
-//    next_gesture(cur_pos[pinky]/i, (byte)pinky );
-//    next_gesture(chill[i], (byte)ring );
-//    next_gesture(chill[i], (byte)middle );
-//    next_gesture(chill[i], (byte)pointer );
-//    next_gesture(chill[i], (byte)thumb );
-    delay(100);
+void relax() {
+
+  int pos_min = get_double_reg(uS_min);
+  
+  for (int i=0; i<16; i++) {  
+    cur_pos[pinky] = new_pos(cur_pos[pinky], pos_min, i);
+    pwm.writeMicroseconds((byte)pinky, cur_pos[pinky]);
+    cur_pos[ring] = new_pos(cur_pos[ring], pos_min, i);
+    pwm.writeMicroseconds((byte)ring, cur_pos[ring] );
+    cur_pos[middle] = new_pos(cur_pos[middle], pos_min, i);
+    pwm.writeMicroseconds((byte)middle, cur_pos[middle] );
+    cur_pos[pointer] = new_pos(cur_pos[pointer], pos_min, i);
+    pwm.writeMicroseconds((byte)pointer, cur_pos[pointer] );
+    cur_pos[thumb] = new_pos(cur_pos[thumb], pos_min, i);
+    pwm.writeMicroseconds((byte)thumb, cur_pos[thumb] );
+    delay(50);
   }
-  cur_pos[pinky] = 16;
-  cur_pos[ring] = 16;
-  cur_pos[middle] = 16;
-  cur_pos[pointer] = 16;
-  cur_pos[thumb] = 16;
 }
 
 void next_gesture(gesture_offset off, finger f) {
-    cur_pos[f] = agent.getRegister(off);
-    pwm.writeMicroseconds((byte)f, calculate_uS(off));
+    cur_pos[f] = constrain(calculate_uS(off), get_double_reg(uS_min), get_double_reg(uS_max));
+    pwm.writeMicroseconds((byte)f, cur_pos[f]);
 }
