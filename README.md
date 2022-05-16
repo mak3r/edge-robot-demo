@@ -64,3 +64,4 @@ Cloud native methodologies for the edge using a humanoid robotic arm as the targ
 * `fleet-live/` - a directory for connecting with Rancher / Fleet GitOps functionality
 * `cri/` - dockerfiles for building container runtime images
 * `Makefile` - to build images and other makey stuff
+* `11-ftdi.rules` - rules required to install on linux to use the ft232h driver
