@@ -53,4 +53,14 @@ Cloud native methodologies for the edge using a humanoid robotic arm as the targ
 * Data collection and monitoring of a remote device 
 * Gitops process for managing application deployments
 * Policy/process gates for holding/releasing updated software
-* 
+
+
+## Demo Content
+
+* `arduino/` - the directory for arduino sketches
+* `src/` - the directory with source code / content for execution in containers
+* `scripts/` - various utility scripts
+* `config/` - k8s yaml configurations
+* `fleet-live/` - a directory for connecting with Rancher / Fleet GitOps functionality
+* `cri/` - dockerfiles for building container runtime images
+* `Makefile` - to build images and other makey stuff
