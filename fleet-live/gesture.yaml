@@ -16,7 +16,7 @@ spec:
       annotations:
         # unique hash of the configmap 
         # changes when the configmap changes
-        configHash: ""
+        configHash: "8899112hash"
     spec:
       containers:
       - name: point
