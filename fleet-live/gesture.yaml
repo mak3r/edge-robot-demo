@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: point
-        image: mak3r/ft232h:v0.0.3
+        image: mak3r/ft232h:v0.0.4
         imagePullPolicy: Always
         command: ["python", "gesture.py"]
         securityContext:
