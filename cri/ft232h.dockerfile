@@ -8,4 +8,7 @@ WORKDIR /root
 
 RUN pip install pyftdi
 
-ENTRYPOINT ["/bin/bash"]
+COPY src/finger-control/*.py /root/
+
+
+ENTRYPOINT ["/bin/sh"]

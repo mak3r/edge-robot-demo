@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ft232h-runner
+  labels:
+    app: ft232h
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ft232h
+  template:
+    metadata:
+      labels:
+        app: ft232h
+    spec:
+      containers:
+      - name: point
+        image: mak3r/ft232h:latest
+        command: ["python", "test.py"]
+        securityContext:
+          allowPrivilegeEscalation: true
+          privileged: true
+          readOnlyRootFilesystem: false
+          runAsNonRoot: false
+        volumeMounts:
+        - mountPath: /dev
+          name: dev
+      volumes:
+      - name: dev
+        hostPath:
+          path: /dev

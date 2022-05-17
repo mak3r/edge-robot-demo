@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gesture-config
+data:
+  gesture.conf: |
+    gesture=point.py

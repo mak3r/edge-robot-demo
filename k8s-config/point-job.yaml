@@ -1,0 +1,25 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: point
+spec:
+  template:
+    spec:
+      containers:
+      - name: point
+        image: mak3r/ft232h:latest
+        command: ["python",  "point.py"]
+        securityContext:
+          allowPrivilegeEscalation: true
+          privileged: true
+          readOnlyRootFilesystem: false
+          runAsNonRoot: false
+        volumeMounts:
+          - mountPath: /dev
+            name: dev
+      volumes:
+        - name: dev
+          hostPath:
+            path: /dev
+      restartPolicy: Never
+  backoffLimit: 4
