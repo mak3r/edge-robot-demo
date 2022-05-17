@@ -27,5 +27,5 @@ publish-ft232h: build-ft232h
 live:
 	cp k8s-config/gesture-cm.yaml fleet-live/.
 	cp k8s-config/gesture.yaml fleet-live/.
-	git add k8s-config
+	git add fleet-live
 	git commit -m "configmap updated $(tail -1 k8s-config/gesture-cm.yaml)"
