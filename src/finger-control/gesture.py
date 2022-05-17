@@ -9,12 +9,13 @@ agent = i2c.get_port(0x47)
 cur_gesture = "default.py"
 while True:
 	# This should really implement a sighup/sigkill handler
-	time.sleep(60)
+	time.sleep(30)
 	with open('/config/gesture.conf') as f:
 		gesture = f.readlines()
 		next_gesture = gesture[0].split("=")[1].rstrip()
 	
 	if (cur_gesture != next_gesture):
+		print("Gesture changed next_gesture: {}, cur_gesture: {}".format(next_gesture, cur_gesture))
 		exec(open(next_gesture).read())
 		cur_gesture = next_gesture
 
