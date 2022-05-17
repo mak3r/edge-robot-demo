@@ -4,4 +4,4 @@ metadata:
   name: gesture-config
 data:
   gesture.conf: |
-    gesture=count.py
+    gesture=point.py
