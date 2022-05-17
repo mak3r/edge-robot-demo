@@ -25,7 +25,7 @@ publish-ft232h: build-ft232h
 	docker push mak3r/ft232h:latest
 
 live:
-	cp src/k8s-config/gesture-cm.yaml live/.
-	cp src/k8s-config/gesture.yaml live/.
-	git add src/k8s-config
+	cp k8s-config/gesture-cm.yaml fleet-live/.
+	cp k8s-config/gesture.yaml fleet-live/.
+	git add k8s-config
 	git commit -m "configmap updated $(tail -1 k8s-config/gesture-cm.yaml)"
