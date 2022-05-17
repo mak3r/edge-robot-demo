@@ -21,7 +21,7 @@ spec:
       containers:
       - name: point
         image: mak3r/ft232h:latest
-        command: ["python", "test.py"]
+        command: ["python", "gesture.py"]
         securityContext:
           allowPrivilegeEscalation: true
           privileged: true
