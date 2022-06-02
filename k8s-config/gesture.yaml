@@ -16,11 +16,12 @@ spec:
       annotations:
         # unique hash of the configmap 
         # changes when the configmap changes
-        configHash: "7899112hash"
+        configHash: "2544c5cf422921de8d8307dbe120a35fb84ec408efe111c270adadc5163d2ce5"
     spec:
       containers:
       - name: point
-        image: mak3r/ft232h:latest
+        image: mak3r/ft232h:v0.0.4
+        imagePullPolicy: Always
         command: ["python", "gesture.py"]
         securityContext:
           allowPrivilegeEscalation: true

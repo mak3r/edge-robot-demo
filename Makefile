@@ -1,3 +1,4 @@
+FT232_IMAGE_TAG=v0.0.4
 
 build-i2cdriver:
 	docker build -t mak3r/i2cdriver:local -f ./cri/i2cdriver.dockerfile .
@@ -21,11 +22,14 @@ exec-ft232h:
 	docker run -it --rm -v /etc/udev/:/etc/udev/ --privileged mak3r/ft232h:local
 
 publish-ft232h: build-ft232h
-	docker tag mak3r/ft232h:local mak3r/ft232h:latest
-	docker push mak3r/ft232h:latest
+	docker tag mak3r/ft232h:local mak3r/ft232h:${FT232_IMAGE_TAG}
+	docker push mak3r/ft232h:${FT232_IMAGE_TAG}
 
 live:
 	cp k8s-config/gesture-cm.yaml fleet-live/.
 	cp k8s-config/gesture.yaml fleet-live/.
 	git add fleet-live
 	git commit -m "configmap updated $(tail -1 k8s-config/gesture-cm.yaml)"
+
+configmap-update:
+	kubectl get cm/gesture-config -oyaml | sha256sum
