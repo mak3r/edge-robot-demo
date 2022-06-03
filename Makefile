@@ -37,5 +37,6 @@ configmap-update:
 install-service:
 	sudo cp ez-booth/service/btn-control.service /etc/systemd/system/btn-control.service
 	sudo cp ez-booth/src/btn-control.py /usr/local/bin/btn-control.py
+	sudo mkdir -p /etc/btn-control
 	sudo cp ez-booth/btn-control.conf /etc/btn-control/btn-control.conf
 	
