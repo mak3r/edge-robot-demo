@@ -9,13 +9,12 @@ import time
 import sys
 
 print("""
-Control the k3s-arm-demo
-Press Ctrl+C to exit.
+Gitops deployments for robot-demo gesture configuration
 """)
 
 
-RUNDIR = sys.argv[1]
 try:
+    RUNDIR = sys.argv[1]
     os.chdir(RUNDIR)
 except FileNotFoundError as fnfe:
     print("Working directory does not exist. Please pass a valid working directory to the script.")
