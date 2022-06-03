@@ -19,13 +19,16 @@ try:
 except FileNotFoundError as fnfe:
     print("Working directory does not exist. Please pass a valid working directory to the script.")
     print(fnfe)
+    sys.stdout.flush()
 except IndexError as iee:
     print("The operational directory must exist and is the first parameter to this script")
+    sys.stdout.flush()
 
 def log_output(output):
     print('Return code:', output.returncode)
     # use decode function to convert to string
     print('Output:',output.stdout.decode("utf-8"))
+    sys.stdout.flush()
 
 ##############
 # Button A
