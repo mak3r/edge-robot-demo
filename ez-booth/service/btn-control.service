@@ -1,0 +1,10 @@
+[Unit]
+Description=k3s button control service
+After=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /home/pi/k3s-demo-control/src/btn-control.py
+
+[Install]
+WantedBy=multi-user.target
