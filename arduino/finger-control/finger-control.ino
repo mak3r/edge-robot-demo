@@ -111,10 +111,10 @@ void setup() {
   pwm.sleep();
   pwm.setPWMFreq(SERVO_FREQ);  // This is the maximum PWM frequency
 
-  interval = 3000; //agent.getRegister(gesture_hold) * 1000;
-  // Arbitrarilly decided that the interval should not be less than 2 seconds 
+  interval = agent.getRegister(gesture_hold) * 500;
+  // Arbitrarilly decided that the interval should not be less than 1 second 
   // or more than 20 seconds
-  interval = constrain(interval, 2000, 20000);
+  interval = constrain(interval, 1000, 20000);
   
   _uS_min = get_double_reg(uS_min);
   _uS_max = get_double_reg(uS_max);
