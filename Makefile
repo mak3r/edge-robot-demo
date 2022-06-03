@@ -33,3 +33,8 @@ live:
 
 configmap-update:
 	kubectl get cm/gesture-config -oyaml | sha256sum
+
+install-service:
+	sudo cp ez-booth/service/btn-control.service /etc/systemd/system/btn-control.service
+	sudo cp ez-booth/src/btn-control.py /usr/local/bin/btn-control.py
+	
