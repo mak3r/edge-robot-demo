@@ -20,6 +20,8 @@ try:
 except FileNotFoundError as fnfe:
     print("Working directory does not exist. Please pass a valid working directory to the script.")
     print(fnfe)
+except IndexError as iee:
+    print("The operational directory must exist and is the first parameter to this script")
 
 def log_output(output):
     print('Return code:', output.returncode)
