@@ -5,7 +5,7 @@ After=multi-user.target
 [Service]
 Type=simple
 EnvironmentFile=/etc/btn-control/btn-control.conf
-ExecStart=/usr/bin/python3 /usr/local/bin/btn-control.py $WORKDIR
+ExecStart=/usr/bin/python3 -u /usr/local/bin/btn-control.py $WORKDIR
 
 [Install]
 WantedBy=multi-user.target
