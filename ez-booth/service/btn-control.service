@@ -4,6 +4,8 @@ After=multi-user.target
 
 [Service]
 Type=simple
+User=pi
+Group=pi
 EnvironmentFile=/etc/btn-control/btn-control.conf
 ExecStart=/usr/bin/python3 -u /usr/local/bin/btn-control.py $WORKDIR
 
