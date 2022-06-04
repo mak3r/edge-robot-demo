@@ -40,9 +40,15 @@ install-service:
 	sudo mkdir -p /etc/btn-control
 	sudo cp ez-booth/btn-control.conf /etc/btn-control/btn-control.conf
 
-clean-service:
+run-service: install-service
+	sudo systemctl enable btn-control.service
+	sudo systemctl start btn-control.service
+
+stop-service:
 	sudo systemctl stop btn-control.service
 	sudo systemctl disable btn-control.service
+
+clean-service: stop-service
 	sudo rm -r /etc/systemd/system/btn-control.service \
 	/usr/local/bin/btn-control.py \
 	/etc/btn-control/
