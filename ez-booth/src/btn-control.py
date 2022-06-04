@@ -19,16 +19,9 @@ try:
 except FileNotFoundError as fnfe:
     print("Working directory does not exist. Please pass a valid working directory to the script.")
     print(fnfe)
-    sys.stdout.flush()
 except IndexError as iee:
     print("The operational directory must exist and is the first parameter to this script")
-    sys.stdout.flush()
 
-def log_output(output):
-    print('Return code:', output.returncode)
-    # use decode function to convert to string
-    print('Output:',output.stdout.decode("utf-8"))
-    sys.stdout.flush()
 
 ##############
 # Button A
@@ -48,16 +41,16 @@ def button_A_release(button, pressed):
     global buttonA_was_held
     if not buttonA_was_held:
         # Checkout the repository into our working directory
-        output = subprocess.run(pullGitRepo, capture_output=True)
-        log_output(output)
+        output = subprocess.check_output(pullGitRepo, stderr=sys.stdout)
+        print(output)
 
 
 @buttonshim.on_hold(buttonshim.BUTTON_A, hold_time=2)
 def button_A_hold(button):
     global buttonA_was_held
     buttonA_was_held = True
-    output = subprocess.run(removeGitRepo)
-    log_output(output)
+    output = subprocess.check_output(removeGitRepo, stderr=sys.stdout)
+    print(output)
 
 ##############
 # Button B
