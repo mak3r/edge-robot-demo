@@ -79,3 +79,12 @@ Cloud native methodologies for the edge using a humanoid robotic arm as the targ
 * `k8s-config/` - kubernetes configuration files for driving configuration changes
 * `src/` - the directory with source code / content for execution in containers
 * `scripts/` - various utility scripts
+
+## Debugging / diagnosing errors
+
+* Q. SUSE git-ops controller doesn't commit code
+* A. Check that gpg key is still valid on controller and in github
+
+* Q. Robot arm doesn't make any gestures when powered on
+* A. Robot arm needs at least USB power in addition to mains even if it is not connected to the pyftdi driver or udev interface
+
