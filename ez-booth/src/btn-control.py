@@ -43,6 +43,7 @@ removeGitRepo = ["rm", "-rf", SRC_DIR]
 @buttonshim.on_press(buttonshim.BUTTON_A)
 def button_A_press(button, pressed):
     global buttonA_was_held
+    cd_rundir()
     buttonshim.set_pixel(0x94, 0x00, 0xd3)
     buttonA_was_held = False
 
