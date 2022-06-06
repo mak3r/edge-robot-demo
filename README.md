@@ -39,10 +39,22 @@ Cloud native methodologies for the edge using a humanoid robotic arm as the targ
 
 ## Wiring diagrams
 
+
+## Booth installation
+
+1. Plugin computer
+1. Connect robot arm to computer via usb
+1. Turn on computer
+1. Turn on robot arm
+1. Import k3s server from computer to Rancher mgmt server
+1. Connect SUSE git-ops controller to wifi network
+
 ## Operating the demo
 
-1. Insure the Arduino has the basic robot arm driver program.
-2. Deploy the robot-arm-update container
+1. Operate git-ops pipeline control (in order)
+    1. pull button (B)
+    1. modify code button (C or D)
+    1. push button (E)
 
 ## Cloud Native Features Utilized
 
@@ -57,11 +69,13 @@ Cloud native methodologies for the edge using a humanoid robotic arm as the targ
 
 ## Demo Content
 
+* `11-ftdi.rules` - rules required to install on linux to use the ft232h driver
+* `Makefile` - to build images and other makey stuff
 * `arduino/` - the directory for arduino sketches
+* `config/` - k8s yaml configurations
+* `cri/` - dockerfiles for building container runtime images
+* `fleet-live/` - a directory for connecting with Rancher / Fleet GitOps functionality
+* `graphics/` - directory with visual overview content
+* `k8s-config/` - kubernetes configuration files for driving configuration changes
 * `src/` - the directory with source code / content for execution in containers
 * `scripts/` - various utility scripts
-* `config/` - k8s yaml configurations
-* `fleet-live/` - a directory for connecting with Rancher / Fleet GitOps functionality
-* `cri/` - dockerfiles for building container runtime images
-* `Makefile` - to build images and other makey stuff
-* `11-ftdi.rules` - rules required to install on linux to use the ft232h driver
