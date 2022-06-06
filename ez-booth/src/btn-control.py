@@ -12,6 +12,7 @@ print("""
 Gitops deployments for robot-demo gesture configuration
 """)
 
+SRC_DIR = "git-ops-demo"
 
 try:
     RUNDIR = sys.argv[1]
@@ -22,13 +23,19 @@ except FileNotFoundError as fnfe:
 except IndexError as iee:
     print("The operational directory must exist and is the first parameter to this script")
 
+def cd_src():
+    try:
+        os.chdir(SRC_DIR)
+    except FileNotFoundError as fnfe:
+        print("Working directory does not exist. Please pass a valid working directory to the script.")
+        print(fnfe)
 
 ##############
 # Button A
 ##############
 buttonA_was_held = False
-pullGitRepo =["git", "clone", "git@github.com:mak3r/edge-robot-demo.git"]
-removeGitRepo = ["rm", "-rf", "edge-robot-demo"]
+cloneGitRepo =["git", "clone", "git@github.com:mak3r/edge-robot-demo.git", SRC_DIR]
+removeGitRepo = ["rm", "-rf", SRC_DIR]
 
 @buttonshim.on_press(buttonshim.BUTTON_A)
 def button_A_press(button, pressed):
@@ -41,7 +48,7 @@ def button_A_release(button, pressed):
     global buttonA_was_held
     if not buttonA_was_held:
         # Checkout the repository into our working directory
-        output = subprocess.check_output(pullGitRepo, stderr=sys.stdout)
+        output = subprocess.check_output(cloneGitRepo, stderr=sys.stdout)
         print(output)
 
 
@@ -56,9 +63,8 @@ def button_A_hold(button):
 # Button B
 ##############
 buttonB_was_held = False
-deployPodPin5 = ["kubectl", "--kubeconfig=/home/pi/kubeconfig.yaml", "apply", "-f", "/home/pi/workloads/white-pod.yaml"]
-undeployPodPin5 = ["kubectl", "--kubeconfig=/home/pi/kubeconfig.yaml", "delete", "-f", "/home/pi/workloads/white-pod.yaml"]
-pushCountGesture = ["make", "deploy-count"]
+pullGitRepo = ["git", "pull"]
+fetchGitRepo = ["git", "fetch"]
 
 
 @buttonshim.on_press(buttonshim.BUTTON_B)
@@ -71,32 +77,23 @@ def button_B_press(button, pressed):
 def button_B_release(button, pressed):
     global buttonB_was_held
     if not buttonB_was_held:
-        subprocess.check_call(deployPodPin5)
-        print(deployPodPin5)
+        # Checkout the repository into our working directory
+        output = subprocess.check_output(pullGitRepo, stderr=sys.stdout)
+        print(output)
 
 @buttonshim.on_hold(buttonshim.BUTTON_B, hold_time=2)
 def button_B_hold(button):
-    global scale
     global buttonB_was_held
     buttonB_was_held = True
-    subprocess.check_call(undeployPodPin5)
-    scale = 1
-    print(undeployPodPin5)
+    output = subprocess.check_output(fetchGitRepo, stderr=sys.stdout)
+    print(output)
 
 ##############
 # Button C
 ##############
 buttonC_was_held = False
-scale=1
-def upScale():
-    global scale
-    scale=scale+1
-    return scale
-
-def downScale():
-    global scale
-    scale=scale-1
-    return scale
+configCountGesture = ["sed", "-i", "'s/gesture=[a-z]*\.py/gesture=count.py/'", "k8s-config/gesture-cm.yaml" ]
+defaultGesture = ["sed", "-i", "'s/gesture=[a-z]*\.py/gesture=default.py/'", "k8s-config/gesture-cm.yaml" ]
 
 @buttonshim.on_press(buttonshim.BUTTON_C)
 def button_C_press(button, pressed):
@@ -108,17 +105,16 @@ def button_C_press(button, pressed):
 def button_C_release(button, pressed):
     global buttonC_was_held
     if not buttonC_was_held:
-        scaleUpPodPin5 = ["kubectl", "--kubeconfig=/home/pi/kubeconfig.yaml", "scale", "--replicas=" + str(upScale()), "deployment/white-pod", "-n", "k3s-arm-demo"]
-        subprocess.check_call(scaleUpPodPin5)
-        print(scaleUpPodPin5)
+        # Checkout the repository into our working directory
+        output = subprocess.check_output(configCountGesture, stderr=sys.stdout)
+        print(output)
 
 @buttonshim.on_hold(buttonshim.BUTTON_C, hold_time=2)
 def button_C_hold(button):
     global buttonC_was_held
     buttonC_was_held = True
-    scaleDownPodPin5 = ["kubectl", "--kubeconfig=/home/pi/kubeconfig.yaml", "scale", "--replicas=" + str(downScale()), "deployment/white-pod", "-n", "k3s-arm-demo"]
-    subprocess.check_call(scaleDownPodPin5)
-    print(scaleDownPodPin5)
+    output = subprocess.check_output(defaultGesture, stderr=sys.stdout)
+    print(output)
 
 ##############
 # Button D
