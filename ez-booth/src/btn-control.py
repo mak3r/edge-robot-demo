@@ -119,6 +119,7 @@ def button_C_press(button, pressed):
 def button_C_release(button, pressed):
     global buttonC_was_held
     if not buttonC_was_held:
+        print("curdir: " + os.getcwd())
         # Checkout the repository into our working directory
         output = subprocess.check_output(configCountGesture, stderr=sys.stdout)
         print(output)
@@ -128,6 +129,7 @@ def button_C_release(button, pressed):
 def button_C_hold(button):
     global buttonC_was_held
     buttonC_was_held = True
+    print("curdir: " + os.getcwd())
     output = subprocess.check_output(defaultGesture, stderr=sys.stdout)
     print(output)
     cd_rundir()
