@@ -100,7 +100,7 @@ def button_B_hold(button):
 ##############
 configCountGesture = ["sed", "-i", "s/gesture=[a-z]*.py/gesture=count.py/", "k8s-config/gesture-cm.yaml" ]
 configPointgGesture = ["sed", "-i", "s/gesture=[a-z]*.py/gesture=point.py/", "k8s-config/gesture-cm.yaml" ]
-defaultGesture = ["sed", "-i", "'s/gesture=[a-z]*.py/gesture=default.py/'", "k8s-config/gesture-cm.yaml" ]
+defaultGesture = ["sed", "-i", "s/gesture=[a-z]*.py/gesture=default.py/", "k8s-config/gesture-cm.yaml" ]
 
 
 ##############
