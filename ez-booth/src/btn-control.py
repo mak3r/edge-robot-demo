@@ -16,12 +16,15 @@ SRC_DIR = "git-ops-demo"
 
 try:
     RUNDIR = sys.argv[1]
-    os.chdir(RUNDIR)
-except FileNotFoundError as fnfe:
-    print("Working directory does not exist. Please pass a valid working directory to the script.")
-    print(fnfe)
 except IndexError as iee:
     print("The operational directory must exist and is the first parameter to this script")
+
+def cd_rundir():
+    try:
+        os.chdir(RUNDIR)
+    except FileNotFoundError as fnfe:
+        print("Working directory does not exist. Please pass a valid working directory to the script.")
+        print(fnfe)
 
 def cd_src():
     try:
@@ -72,6 +75,7 @@ def button_B_press(button, pressed):
     global buttonB_was_held
     buttonshim.set_pixel(0x00, 0x00, 0xff)
     buttonB_was_held = False
+    cd_src()
 
 @buttonshim.on_release(buttonshim.BUTTON_B)
 def button_B_release(button, pressed):
@@ -80,6 +84,7 @@ def button_B_release(button, pressed):
         # Checkout the repository into our working directory
         output = subprocess.check_output(pullGitRepo, stderr=sys.stdout)
         print(output)
+    cd_rundir()
 
 @buttonshim.on_hold(buttonshim.BUTTON_B, hold_time=2)
 def button_B_hold(button):
@@ -87,6 +92,7 @@ def button_B_hold(button):
     buttonB_was_held = True
     output = subprocess.check_output(fetchGitRepo, stderr=sys.stdout)
     print(output)
+    cd_rundir()
 
 ##############
 # Button C
@@ -100,6 +106,7 @@ def button_C_press(button, pressed):
     global buttonC_was_held
     buttonshim.set_pixel(0x00, 0xff, 0x00)
     buttonC_was_held = False
+    cd_src()
 
 @buttonshim.on_release(buttonshim.BUTTON_C)
 def button_C_release(button, pressed):
@@ -108,6 +115,7 @@ def button_C_release(button, pressed):
         # Checkout the repository into our working directory
         output = subprocess.check_output(configCountGesture, stderr=sys.stdout)
         print(output)
+    cd_rundir()
 
 @buttonshim.on_hold(buttonshim.BUTTON_C, hold_time=2)
 def button_C_hold(button):
@@ -115,6 +123,7 @@ def button_C_hold(button):
     buttonC_was_held = True
     output = subprocess.check_output(defaultGesture, stderr=sys.stdout)
     print(output)
+    cd_rundir()
 
 ##############
 # Button D
