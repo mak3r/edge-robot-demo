@@ -74,6 +74,7 @@ Cloud native methodologies for the edge using a humanoid robotic arm as the targ
 * `arduino/` - the directory for arduino sketches
 * `config/` - k8s yaml configurations
 * `cri/` - dockerfiles for building container runtime images
+* `ez-booth/` - service and python script for driving the button shim used in git-ops pipeline
 * `fleet-live/` - a directory for connecting with Rancher / Fleet GitOps functionality
 * `graphics/` - directory with visual overview content
 * `k8s-config/` - kubernetes configuration files for driving configuration changes
