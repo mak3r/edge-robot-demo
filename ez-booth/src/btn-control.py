@@ -32,8 +32,8 @@ SRC_PATH = RUN_DIR + "/" + SRC_DIR
 # Button A
 ##############
 buttonA_was_held = False
-cloneGitRepo =["git", "clone", "git@github.com:mak3r/edge-robot-demo.git", SRC_DIR]
-removeGitRepo = ["rm", "-rf", SRC_DIR]
+cloneGitRepo =["git", "clone", "git@github.com:mak3r/edge-robot-demo.git", SRC_PATH]
+removeGitRepo = ["rm", "-rf", SRC_PATH]
 
 @buttonshim.on_press(buttonshim.BUTTON_A)
 def button_A_press(button, pressed):
