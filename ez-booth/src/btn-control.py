@@ -176,15 +176,15 @@ def gitPush():
     gitAdd = ["git", "-C", SRC_PATH, "add", "--all"]
     gitCommit = ["git", "-C", SRC_PATH, "commit", "-m", curGesture]
     pushGitRepo = ["git", "-C", SRC_PATH, "push"]
-    try:
-        output = subprocess.check_output(gitAdd, stderr=sys.stdout)
-        print(output)
-        output = subprocess.check_output(gitCommit, stderr=sys.stdout)
-        print(output)
-        output = subprocess.check_output(pushGitRepo, stderr=sys.stdout)
-        print(output)
-    except Exception as e:
-        print(e)
+#    try:
+    output = subprocess.check_output(gitAdd, stderr=sys.stdout)
+    print(output)
+    output = subprocess.check_output(gitCommit, stderr=sys.stdout)
+    print(output)
+    output = subprocess.check_output(pushGitRepo, stderr=sys.stdout)
+    print(output)
+    # except Exception as e:
+    #     print(e)
 
 @buttonshim.on_press(buttonshim.BUTTON_E)
 def button_E_press(button, pressed):
