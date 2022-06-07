@@ -174,7 +174,7 @@ buttonE_was_held = False
 def gitPush():
     global curGesture
     gitAdd = ["git", "-C", SRC_PATH, "add", "--all"]
-    gitCommit = ["git", "-C", SRC_PATH, "commit", "-m", curGesture]
+    gitCommit = ["git", "-C", SRC_PATH, "commit", "-m", '"' + curGesture + '"']
     pushGitRepo = ["git", "-C", SRC_PATH, "push"]
 #    try:
     output = subprocess.check_output(gitAdd, stderr=sys.stdout)
