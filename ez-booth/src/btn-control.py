@@ -28,11 +28,22 @@ except IndexError as iee:
 CONFIG_FILE_PATH = RUN_DIR + "/" + SRC_DIR + "/" + CONFIG_DIR + "/" + FILE_NAME
 SRC_PATH = RUN_DIR + "/" + SRC_DIR
 
+def gitClone():
+    cloneGitRepo =["git", "clone", "git@github.com:mak3r/edge-robot-demo.git", SRC_PATH]
+    output = subprocess.check_output(cloneGitRepo, stderr=sys.stdout)
+    print(output)
+    configEmail = ["git", "config", "user.email", "robot.demo@suse.com"]
+    output = subprocess.check_output(configEmail, stderr=sys.stdout)
+    print(output)
+    configUserName = ["git", "config", "user.name", "Robot Demo"]
+    output = subprocess.check_output(configUserName, stderr=sys.stdout)
+    print(output)
+
+
 ##############
 # Button A
 ##############
 buttonA_was_held = False
-cloneGitRepo =["git", "clone", "git@github.com:mak3r/edge-robot-demo.git", SRC_PATH]
 removeGitRepo = ["rm", "-rf", SRC_PATH]
 
 @buttonshim.on_press(buttonshim.BUTTON_A)
@@ -45,9 +56,7 @@ def button_A_press(button, pressed):
 def button_A_release(button, pressed):
     global buttonA_was_held
     if not buttonA_was_held:
-        # Checkout the repository into our working directory
-        output = subprocess.check_output(cloneGitRepo, stderr=sys.stdout)
-        print(output)
+        gitClone()
 
 
 @buttonshim.on_hold(buttonshim.BUTTON_A, hold_time=2)
