@@ -32,10 +32,10 @@ def gitClone():
     cloneGitRepo =["git", "clone", "git@github.com:mak3r/edge-robot-demo.git", SRC_PATH]
     output = subprocess.check_output(cloneGitRepo, stderr=sys.stdout)
     print(output)
-    configEmail = ["git", "config", "user.email", "robot.demo@suse.com"]
+    configEmail = ["git", "-C", SRC_PATH, "config", "user.email", "robot.demo@suse.com"]
     output = subprocess.check_output(configEmail, stderr=sys.stdout)
     print(output)
-    configUserName = ["git", "config", "user.name", "Robot Demo"]
+    configUserName = ["git", "-C", SRC_PATH, "config", "user.name", "Robot Demo"]
     output = subprocess.check_output(configUserName, stderr=sys.stdout)
     print(output)
 
