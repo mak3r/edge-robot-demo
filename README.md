@@ -26,7 +26,7 @@ Cloud native methodologies for the edge using a humanoid robotic arm as the targ
 
 ## Setup
 
-1. Install the arduino program on the Uno
+1. Install the arduino program `finger-control` on the Uno
 
     1. Also depends on the following libraries
     
